@@ -22,6 +22,15 @@ All content lives in [`src/data/portfolio.ts`](src/data/portfolio.ts) (projects
 and experience) and [`src/data/site.ts`](src/data/site.ts) (identity, socials,
 tech stack). Editing those is all you need to update the site.
 
+## Internationalization
+
+The site is bilingual (English default, French) via a client-side locale
+context ([`src/i18n`](src/i18n)). UI strings live in
+[`src/i18n/messages.ts`](src/i18n/messages.ts); localized content is in
+[`src/data/portfolio.ts`](src/data/portfolio.ts). A language toggle in the nav
+switches locale and persists the choice. English remains the default and the
+statically rendered language.
+
 ## Deployment — GitHub Pages
 
 The site is deployed automatically to **GitHub Pages** via GitHub Actions

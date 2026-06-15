@@ -5,6 +5,7 @@ import { Box, Flex, HStack, Link, Text } from "@chakra-ui/react";
 import { FiArrowUpRight } from "react-icons/fi";
 import type { Entry } from "@/data/portfolio";
 import { TagList } from "@/components/primitives";
+import { useLocale } from "@/i18n/provider";
 
 function basePath(entry: Entry): string {
   return entry.type === "Project" ? "/projects" : "/experience";
@@ -15,6 +16,7 @@ function basePath(entry: Entry): string {
  * stack, which reads as more credible and stays fully legible.
  */
 export function EntryCard({ entry }: { entry: Entry }) {
+  const { t } = useLocale();
   return (
     <Link
       as={NextLink}
@@ -49,7 +51,7 @@ export function EntryCard({ entry }: { entry: Entry }) {
             textTransform="uppercase"
             color="fg.muted"
           >
-            {entry.type}
+            {t.types[entry.type]}
           </Text>
           <Text fontFamily="mono" fontSize="xs" color="fg.muted">
             {entry.period}
@@ -85,7 +87,7 @@ export function EntryCard({ entry }: { entry: Entry }) {
           transition="opacity 0.2s ease, transform 0.2s ease"
           _groupHover={{ opacity: 1, transform: "translateX(0)" }}
         >
-          <Text>View details</Text>
+          <Text>{t.card.viewDetails}</Text>
           <FiArrowUpRight />
         </HStack>
       </Flex>

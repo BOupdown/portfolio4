@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 import { Provider } from "@/components/ui/provider";
+import { LocaleProvider } from "@/i18n/provider";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { site } from "@/data/site";
@@ -52,11 +53,13 @@ export default function RootLayout({
         className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}
       >
         <Provider>
-          <div className="flex flex-col min-h-screen">
-            <Nav />
-            <main className="flex-1 flex flex-col">{children}</main>
-            <Footer />
-          </div>
+          <LocaleProvider>
+            <div className="flex flex-col min-h-screen">
+              <Nav />
+              <main className="flex-1 flex flex-col">{children}</main>
+              <Footer />
+            </div>
+          </LocaleProvider>
         </Provider>
       </body>
     </html>
