@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { FiArrowRight, FiArrowUpRight } from "react-icons/fi";
 import { getProjects, getExperience } from "@/data/portfolio";
-import { site, stackGroups } from "@/data/site";
+import { site, stackGroups, education } from "@/data/site";
 import { Kicker } from "@/components/primitives";
 import { EntryGrid } from "@/components/EntryCard";
 import { SocialLinks } from "@/components/SocialLinks";
@@ -218,6 +218,34 @@ export default function Home() {
               </Wrap>
             </Stack>
           ))}
+        </SimpleGrid>
+      </Stack>
+
+      {/* Background: education & languages */}
+      <Stack gap="6" pt={{ base: "16", md: "24" }}>
+        <Stack gap="2">
+          <Kicker as="h2">{t.about.kicker}</Kicker>
+        </Stack>
+        <SimpleGrid columns={{ base: 1, sm: 2 }} gap="6">
+          <Stack gap="2.5">
+            <Text fontFamily="mono" fontSize="xs" textTransform="uppercase" letterSpacing="0.1em" color="fg.muted">
+              {t.about.educationTitle}
+            </Text>
+            <Text fontWeight="medium" color="fg">
+              {t.about.degree}
+            </Text>
+            <Text fontFamily="mono" fontSize="sm" color="fg.muted">
+              {education.school} · {education.period}
+            </Text>
+          </Stack>
+          <Stack gap="2.5">
+            <Text fontFamily="mono" fontSize="xs" textTransform="uppercase" letterSpacing="0.1em" color="fg.muted">
+              {t.about.languagesTitle}
+            </Text>
+            <Text color="fg.muted" lineHeight="1.7">
+              {t.about.languages}
+            </Text>
+          </Stack>
         </SimpleGrid>
       </Stack>
 
