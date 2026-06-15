@@ -1,5 +1,5 @@
 import { FaLinkedin, FaGithub } from "react-icons/fa";
-import { FiDownload, FiMail } from "react-icons/fi";
+import { FiDownload } from "react-icons/fi";
 import type { IconType } from "react-icons";
 
 export const site = {
@@ -26,7 +26,6 @@ export type SocialLink = {
 };
 
 export const socials: SocialLink[] = [
-  { label: "Email", href: `mailto:${site.email}`, icon: FiMail, external: false },
   { label: "LinkedIn", href: site.linkedin, icon: FaLinkedin, external: true },
   { label: "GitHub", href: site.github, icon: FaGithub, external: true },
   { label: "Download CV", href: site.resume, icon: FiDownload, external: false, download: true },

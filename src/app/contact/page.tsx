@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Container, Heading, Link, Stack, Text } from "@chakra-ui/react";
+import { Container, Heading, Stack, Text } from "@chakra-ui/react";
 import { ContactForm } from "@/components/ContactForm";
 import { SocialLinks } from "@/components/SocialLinks";
 import { Kicker } from "@/components/primitives";
@@ -19,11 +19,12 @@ export default function ContactPage() {
           Get in touch
         </Heading>
         <Text color="fg.muted" fontSize={{ base: "md", md: "lg" }} lineHeight="1.6">
-          {site.availability}. Reach me directly at{" "}
-          <Link href={`mailto:${site.email}`} color="accent.fg" fontWeight="medium">
+          {site.availability}. Send a message below — it reaches me directly, no
+          email app required. You can also write to{" "}
+          <Text as="span" color="fg" fontWeight="medium">
             {site.email}
-          </Link>{" "}
-          or send a message below.
+          </Text>
+          .
         </Text>
 
         <SocialLinks pt="1" />
