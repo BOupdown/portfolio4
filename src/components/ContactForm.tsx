@@ -11,6 +11,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { site } from "@/data/site";
+import { useLocale } from "@/i18n/provider";
 
 type Status = "idle" | "success" | "error";
 
@@ -23,6 +24,7 @@ const WEB3FORMS_KEY =
   process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "930639e7-8ac4-4585-8f25-a3e7474e6ed2";
 
 export function ContactForm() {
+  const { t } = useLocale();
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -94,21 +96,21 @@ export function ContactForm() {
         <Fieldset.Content>
           <Field.Root required>
             <Field.Label>
-              Name or company <Field.RequiredIndicator />
+              {t.contact.nameLabel} <Field.RequiredIndicator />
             </Field.Label>
             <Input name="name" required />
           </Field.Root>
 
           <Field.Root required>
             <Field.Label>
-              Email address <Field.RequiredIndicator />
+              {t.contact.emailLabel} <Field.RequiredIndicator />
             </Field.Label>
             <Input name="email" type="email" required />
           </Field.Root>
 
           <Field.Root required>
             <Field.Label>
-              Message <Field.RequiredIndicator />
+              {t.contact.messageLabel} <Field.RequiredIndicator />
             </Field.Label>
             <Textarea name="message" rows={5} required />
           </Field.Root>
@@ -129,21 +131,23 @@ export function ContactForm() {
           colorPalette="blue"
           alignSelf="flex-start"
           loading={submitting}
-          loadingText="Sending…"
+          loadingText={t.contact.sending}
           mt="2"
         >
-          Send message
+          {t.contact.send}
         </Button>
 
         {status === "success" && (
           <Text color="green.500" fontSize="sm" mt="2">
-            Thanks — your message has been sent. I&apos;ll reply soon.
+            {t.contact.success}
           </Text>
         )}
         {status === "error" && (
           <Text color="red.500" fontSize="sm" mt="2">
-            {errorMsg ? `Couldn't send: ${errorMsg}. ` : "Something went wrong while sending. "}
-            Please try again, or reach me at {site.email}.
+            {errorMsg
+              ? `${t.contact.errorPrefix}: ${errorMsg}. `
+              : `${t.contact.errorGeneric}. `}
+            {t.contact.errorTail} {site.email}.
           </Text>
         )}
       </Fieldset.Root>

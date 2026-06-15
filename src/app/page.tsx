@@ -18,15 +18,18 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { FiArrowRight, FiArrowUpRight } from "react-icons/fi";
-import { projects, experience } from "@/data/portfolio";
+import { getProjects, getExperience } from "@/data/portfolio";
 import { site, stackGroups } from "@/data/site";
 import { Kicker } from "@/components/primitives";
 import { EntryGrid } from "@/components/EntryCard";
 import { SocialLinks } from "@/components/SocialLinks";
+import { useLocale } from "@/i18n/provider";
 import { asset } from "@/lib/asset";
 
 export default function Home() {
-  const featured = projects.slice(0, 4);
+  const { locale, t } = useLocale();
+  const featured = getProjects(locale).slice(0, 4);
+  const experience = getExperience(locale);
 
   return (
     <Container maxW="3xl" py={{ base: "12", md: "20" }}>
@@ -40,7 +43,7 @@ export default function Home() {
         <Stack gap="5" flex="1">
           <HStack gap="2">
             <Box w="6px" h="6px" borderRadius="full" bg="green.500" />
-            <Kicker color="fg.muted">{site.availability}</Kicker>
+            <Kicker color="fg.muted">{t.availability}</Kicker>
           </HStack>
 
           <Heading
@@ -52,12 +55,12 @@ export default function Home() {
           </Heading>
 
           <Text fontSize={{ base: "lg", md: "xl" }} color="fg.muted" lineHeight="1.6" maxW="2xl">
-            {site.tagline} I turn complex problems into clean, reliable,
-            maintainable systems.
+            {t.tagline}
+            {t.taglineExtra}
           </Text>
 
           <Text fontFamily="mono" fontSize="sm" color="fg.muted">
-            {site.location}
+            {t.location}
           </Text>
         </Stack>
 
@@ -77,11 +80,11 @@ export default function Home() {
       <HStack gap="3" pt="8" wrap="wrap">
         <Button colorPalette="blue" asChild>
           <NextLink href="/projects">
-            View projects <Icon as={FiArrowRight} ml="1" />
+            {t.actions.viewProjects} <Icon as={FiArrowRight} ml="1" />
           </NextLink>
         </Button>
         <Button variant="outline" asChild>
-          <NextLink href="/contact">Get in touch</NextLink>
+          <NextLink href="/contact">{t.actions.getInTouch}</NextLink>
         </Button>
       </HStack>
 
@@ -91,9 +94,9 @@ export default function Home() {
       <Stack gap="6" pt={{ base: "16", md: "24" }}>
         <Flex justify="space-between" align="baseline" gap="4">
           <Stack gap="2">
-            <Kicker as="h2">Selected work</Kicker>
+            <Kicker as="h2">{t.home.selectedWork}</Kicker>
             <Heading size={{ base: "xl", md: "2xl" }} letterSpacing="tight">
-              Projects
+              {t.home.projects}
             </Heading>
           </Stack>
           <Link
@@ -107,7 +110,7 @@ export default function Home() {
             gap="1"
             _hover={{ color: "fg", textDecoration: "none" }}
           >
-            All projects <FiArrowUpRight />
+            {t.actions.allProjects} <FiArrowUpRight />
           </Link>
         </Flex>
         <EntryGrid entries={featured} />
@@ -117,9 +120,9 @@ export default function Home() {
       <Stack gap="6" pt={{ base: "16", md: "24" }}>
         <Flex justify="space-between" align="baseline" gap="4">
           <Stack gap="2">
-            <Kicker as="h2">Where I&apos;ve worked</Kicker>
+            <Kicker as="h2">{t.home.whereIveWorked}</Kicker>
             <Heading size={{ base: "xl", md: "2xl" }} letterSpacing="tight">
-              Experience
+              {t.home.experience}
             </Heading>
           </Stack>
           <Link
@@ -133,7 +136,7 @@ export default function Home() {
             gap="1"
             _hover={{ color: "fg", textDecoration: "none" }}
           >
-            All experience <FiArrowUpRight />
+            {t.actions.allExperience} <FiArrowUpRight />
           </Link>
         </Flex>
 
@@ -187,16 +190,16 @@ export default function Home() {
       {/* Stack */}
       <Stack gap="6" pt={{ base: "16", md: "24" }}>
         <Stack gap="2">
-          <Kicker as="h2">Toolbox</Kicker>
+          <Kicker as="h2">{t.home.toolbox}</Kicker>
           <Heading size={{ base: "xl", md: "2xl" }} letterSpacing="tight">
-            Tech stack
+            {t.home.techStack}
           </Heading>
         </Stack>
         <SimpleGrid columns={{ base: 1, sm: 2 }} gap="6">
           {stackGroups.map((group) => (
             <Stack key={group.label} gap="2.5">
               <Text fontFamily="mono" fontSize="xs" textTransform="uppercase" letterSpacing="0.1em" color="fg.muted">
-                {group.label}
+                {t.stackGroups[group.label] ?? group.label}
               </Text>
               <Wrap gap="1.5">
                 {group.items.map((item) => (
@@ -229,19 +232,18 @@ export default function Home() {
         textAlign="center"
       >
         <Heading size={{ base: "xl", md: "2xl" }} letterSpacing="tight">
-          Let&apos;s build something together
+          {t.home.ctaHeading}
         </Heading>
         <Text color="fg.muted" mt="3" maxW="md" mx="auto">
-          {site.availability}. The fastest way to reach me is by email or
-          LinkedIn.
+          {t.availability}. {t.home.ctaTail}
         </Text>
         <HStack justify="center" gap="3" mt="6" wrap="wrap">
           <Button colorPalette="blue" asChild>
-            <NextLink href="/contact">Get in touch</NextLink>
+            <NextLink href="/contact">{t.actions.getInTouch}</NextLink>
           </Button>
           <Button variant="outline" asChild>
             <a href={asset(site.resume)} download>
-              Download CV
+              {t.actions.downloadCV}
             </a>
           </Button>
         </HStack>

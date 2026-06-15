@@ -4,16 +4,19 @@ import { Box, Flex, HStack, Link, Spacer, type FlexProps } from "@chakra-ui/reac
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { ColorModeButton } from "@/components/ui/color-mode";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useLocale } from "@/i18n/provider";
 import { site } from "@/data/site";
-
-const navLinks = [
-  { href: "/projects", label: "Projects" },
-  { href: "/experience", label: "Experience" },
-  { href: "/contact", label: "Contact" },
-];
 
 export function Nav(props: FlexProps) {
   const pathname = usePathname();
+  const { t } = useLocale();
+
+  const navLinks = [
+    { href: "/projects", label: t.nav.projects },
+    { href: "/experience", label: t.nav.experience },
+    { href: "/contact", label: t.nav.contact },
+  ];
 
   return (
     <Flex
@@ -72,6 +75,7 @@ export function Nav(props: FlexProps) {
           );
         })}
       </HStack>
+      <LanguageToggle />
       <ColorModeButton />
     </Flex>
   );

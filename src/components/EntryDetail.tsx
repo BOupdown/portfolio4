@@ -16,11 +16,13 @@ import {
 import { FiArrowLeft, FiArrowUpRight } from "react-icons/fi";
 import type { Entry } from "@/data/portfolio";
 import { Kicker, TagList } from "@/components/primitives";
+import { useLocale } from "@/i18n/provider";
 
 export function EntryDetail({ entry }: { entry: Entry }) {
+  const { t } = useLocale();
   const isExperience = entry.type !== "Project";
   const backHref = isExperience ? "/experience" : "/projects";
-  const backLabel = isExperience ? "Back to experience" : "Back to projects";
+  const backLabel = isExperience ? t.detail.backToExperience : t.detail.backToProjects;
 
   const metaParts = [entry.org, entry.location, entry.period].filter(Boolean);
 
@@ -43,7 +45,7 @@ export function EntryDetail({ entry }: { entry: Entry }) {
       </Link>
 
       <Stack gap="4" mb="10">
-        <Kicker>{entry.type}</Kicker>
+        <Kicker>{t.types[entry.type]}</Kicker>
         <Heading
           as="h1"
           size={{ base: "2xl", md: "3xl" }}
@@ -63,7 +65,7 @@ export function EntryDetail({ entry }: { entry: Entry }) {
       <Separator mb="8" />
 
       <Stack gap="3" mb="10">
-        <Kicker as="h2">Highlights</Kicker>
+        <Kicker as="h2">{t.detail.highlights}</Kicker>
         <List.Root gap="3" ps="0" listStyleType="none">
           {entry.highlights.map((h, i) => (
             <List.Item
@@ -89,7 +91,7 @@ export function EntryDetail({ entry }: { entry: Entry }) {
       </Stack>
 
       <Stack gap="3" mb="10">
-        <Kicker as="h2">Stack</Kicker>
+        <Kicker as="h2">{t.detail.stack}</Kicker>
         <TagList tags={entry.stack} />
       </Stack>
 
