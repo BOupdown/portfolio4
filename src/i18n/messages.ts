@@ -52,15 +52,22 @@ export type Messages = {
   };
   notFound: { kicker: string; title: string; text: string; back: string };
   stackGroups: Record<string, string>;
+  about: {
+    kicker: string;
+    educationTitle: string;
+    degree: string;
+    languagesTitle: string;
+    languages: string;
+  };
   language: string;
 };
 
 const en: Messages = {
   availability: "Open to software engineering roles & internships",
   tagline:
-    "Software engineer focused on cloud infrastructure, backend systems and applied AI.",
+    "DevOps & cloud engineer specializing in cloud infrastructure, CI/CD automation and data-driven backends.",
   taglineExtra: " I turn complex problems into clean, reliable, maintainable systems.",
-  location: "France · open to relocation",
+  location: "Pau, France · open to relocation",
   nav: { projects: "Projects", experience: "Experience", contact: "Contact" },
   actions: {
     viewProjects: "View projects",
@@ -126,7 +133,15 @@ const en: Messages = {
     Backend: "Backend",
     "Cloud & DevOps": "Cloud & DevOps",
     Frontend: "Frontend",
+    Databases: "Databases",
     "Data & AI": "Data & AI",
+  },
+  about: {
+    kicker: "Background",
+    educationTitle: "Education",
+    degree: "MEng in Computer Engineering — Cloud Computing track",
+    languagesTitle: "Languages",
+    languages: "English (C1) · French (native) · Italian (B1)",
   },
   language: "Language",
 };
@@ -134,10 +149,10 @@ const en: Messages = {
 const fr: Messages = {
   availability: "Ouvert aux postes et stages en ingénierie logicielle",
   tagline:
-    "Ingénieur logiciel spécialisé en infrastructure cloud, systèmes backend et IA appliquée.",
+    "Ingénieur DevOps & cloud, spécialisé en infrastructure cloud, automatisation CI/CD et backends orientés données.",
   taglineExtra:
     " Je transforme des problèmes complexes en systèmes clairs, fiables et maintenables.",
-  location: "France · ouvert à la mobilité",
+  location: "Pau, France · ouvert à la mobilité",
   nav: { projects: "Projets", experience: "Expérience", contact: "Contact" },
   actions: {
     viewProjects: "Voir les projets",
@@ -203,7 +218,15 @@ const fr: Messages = {
     Backend: "Backend",
     "Cloud & DevOps": "Cloud & DevOps",
     Frontend: "Frontend",
+    Databases: "Bases de données",
     "Data & AI": "Data & IA",
+  },
+  about: {
+    kicker: "Profil",
+    educationTitle: "Formation",
+    degree: "Diplôme d'ingénieur en informatique — spécialité Cloud Computing",
+    languagesTitle: "Langues",
+    languages: "Anglais (C1) · Français (natif) · Italien (B1)",
   },
   language: "Langue",
 };
