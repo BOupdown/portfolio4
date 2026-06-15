@@ -7,7 +7,6 @@ import {
   Field,
   Fieldset,
   Input,
-  Stack,
   Text,
   Textarea,
 } from "@chakra-ui/react";
@@ -33,29 +32,39 @@ export function ContactForm() {
       string
     >;
 
-    if (!WEB3FORMS_KEY) {
-      // Fallback: compose an email in the visitor's mail client.
-      const subject = encodeURIComponent(`Portfolio enquiry — ${data.name ?? ""}`);
-      const body = encodeURIComponent(
-        `Name / company: ${data.name ?? ""}\nEmail: ${data.email ?? ""}\n\n${data.message ?? ""}`,
-      );
-      window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
-      return;
-    }
-
     setSubmitting(true);
     setStatus("idle");
+
     try {
+      // Email is sent directly from the browser to Web3Forms — no backend and
+      // no email client involved.
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
-          subject: `Portfolio enquiry from ${data.name ?? "visitor"}`,
-          ...data,
+          subject: `Portfolio enquiry from ${data.name || "a visitor"}`,
+          from_name: data.name,
+          replyto: data.email,
+          name: data.name,
+          email: data.email,
+          message: data.message,
+          // Honeypot — submissions with this field filled are treated as spam.
+          botcheck: data.botcheck,
         }),
       });
-      if (!res.ok) throw new Error("Request failed");
+
+      const result = (await res.json().catch(() => null)) as
+        | { success?: boolean }
+        | null;
+
+      if (!res.ok || !result?.success) {
+        throw new Error("Request failed");
+      }
+
       setStatus("success");
       formEl.reset();
     } catch {
@@ -91,10 +100,22 @@ export function ContactForm() {
             <Input name="email" type="email" required />
           </Field.Root>
 
-          <Field.Root>
-            <Field.Label>Message</Field.Label>
-            <Textarea name="message" rows={5} />
+          <Field.Root required>
+            <Field.Label>
+              Message <Field.RequiredIndicator />
+            </Field.Label>
+            <Textarea name="message" rows={5} required />
           </Field.Root>
+
+          {/* Honeypot field, hidden from real users. */}
+          <Input
+            type="text"
+            name="botcheck"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            display="none"
+          />
         </Fieldset.Content>
 
         <Button
@@ -102,6 +123,7 @@ export function ContactForm() {
           colorPalette="blue"
           alignSelf="flex-start"
           loading={submitting}
+          loadingText="Sending…"
           mt="2"
         >
           Send message
@@ -114,7 +136,8 @@ export function ContactForm() {
         )}
         {status === "error" && (
           <Text color="red.500" fontSize="sm" mt="2">
-            Something went wrong. Please email me directly at {site.email}.
+            Something went wrong while sending. Please try again, or reach me at{" "}
+            {site.email}.
           </Text>
         )}
       </Fieldset.Root>
