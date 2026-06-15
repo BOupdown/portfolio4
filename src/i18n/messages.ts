@@ -139,7 +139,7 @@ const en: Messages = {
   about: {
     kicker: "Background",
     educationTitle: "Education",
-    degree: "MEng in Computer Engineering — Cloud Computing track",
+    degree: "Engineering degree (Master's level) in Computer Science — Cloud Computing track",
     languagesTitle: "Languages",
     languages: "English (C1) · French (native) · Italian (B1)",
   },
