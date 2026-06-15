@@ -17,8 +17,10 @@ type Status = "idle" | "success" | "error";
 // Web3Forms access key. These keys are public by design (safe in client-side
 // code) and protected by the domain allowlist configured on web3forms.com.
 // An env override is supported for local/staging use.
+// Use `||` (not `??`): the deploy workflow injects an empty string when the
+// optional WEB3FORMS_KEY secret is unset, and an empty key must fall back too.
 const WEB3FORMS_KEY =
-  process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "930639e7-8ac4-4585-8f25-a3e7474e6ed2";
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "930639e7-8ac4-4585-8f25-a3e7474e6ed2";
 
 export function ContactForm() {
   const [submitting, setSubmitting] = useState(false);
