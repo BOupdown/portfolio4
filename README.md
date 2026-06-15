@@ -38,10 +38,11 @@ One-time setup:
 The base path is injected automatically at build time, so the site works whether
 it's served from a subpath (project site) or a custom domain.
 
-## Contact form (optional)
+## Contact form
 
-The contact form works out of the box: with no configuration it opens the
-visitor's email client (`mailto:`). To receive submissions by email without a
-backend, create a free key at [web3forms.com](https://web3forms.com) and add it
-as a repository secret named `WEB3FORMS_KEY` — the workflow wires it in
-automatically.
+The contact form posts to [Web3Forms](https://web3forms.com) (no backend
+required) and delivers submissions by email. The access key is public by design
+and restricted to the site's domain. To override it (e.g. for a fork or staging
+environment), set `NEXT_PUBLIC_WEB3FORMS_KEY` — locally in `.env.local` or as a
+repository secret `WEB3FORMS_KEY` wired through the deploy workflow. If no key is
+available, the form falls back to opening the visitor's email client (`mailto:`).

@@ -15,10 +15,11 @@ import { site } from "@/data/site";
 
 type Status = "idle" | "success" | "error";
 
-// Optional: set NEXT_PUBLIC_WEB3FORMS_KEY (free, from web3forms.com) to receive
-// submissions by email without a backend. Without it, the form gracefully falls
-// back to opening the visitor's email client — so it always works on a static host.
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+// Web3Forms access key. These keys are public by design (safe in client-side
+// code) and protected by the domain allowlist configured on web3forms.com.
+// An env override is supported for local/staging use.
+const WEB3FORMS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "930639e7-8ac4-4585-8f25-a3e7474e6ed2";
 
 export function ContactForm() {
   const [submitting, setSubmitting] = useState(false);
