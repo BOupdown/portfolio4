@@ -23,6 +23,7 @@ const WEB3FORMS_KEY =
 export function ContactForm() {
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,6 +35,7 @@ export function ContactForm() {
 
     setSubmitting(true);
     setStatus("idle");
+    setErrorMsg(null);
 
     try {
       // Email is sent directly from the browser to Web3Forms — no backend and
@@ -48,7 +50,6 @@ export function ContactForm() {
           access_key: WEB3FORMS_KEY,
           subject: `Portfolio enquiry from ${data.name || "a visitor"}`,
           from_name: data.name,
-          replyto: data.email,
           name: data.name,
           email: data.email,
           message: data.message,
@@ -58,16 +59,19 @@ export function ContactForm() {
       });
 
       const result = (await res.json().catch(() => null)) as
-        | { success?: boolean }
+        | { success?: boolean; message?: string }
         | null;
 
       if (!res.ok || !result?.success) {
-        throw new Error("Request failed");
+        // Surface the actual reason (e.g. "Domain not allowed") to make
+        // misconfiguration obvious instead of hiding it behind a generic error.
+        throw new Error(result?.message || `Request failed (${res.status})`);
       }
 
       setStatus("success");
       formEl.reset();
-    } catch {
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : null);
       setStatus("error");
     } finally {
       setSubmitting(false);
@@ -136,8 +140,8 @@ export function ContactForm() {
         )}
         {status === "error" && (
           <Text color="red.500" fontSize="sm" mt="2">
-            Something went wrong while sending. Please try again, or reach me at{" "}
-            {site.email}.
+            {errorMsg ? `Couldn't send: ${errorMsg}. ` : "Something went wrong while sending. "}
+            Please try again, or reach me at {site.email}.
           </Text>
         )}
       </Fieldset.Root>

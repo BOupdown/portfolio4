@@ -1,17 +1,19 @@
 "use client";
 
-import NextLink from "next/link";
 import { HStack, Icon, Link, type StackProps } from "@chakra-ui/react";
 import { socials } from "@/data/site";
+import { asset } from "@/lib/asset";
 
 export function SocialLinks(props: StackProps) {
   return (
-    <HStack as="ul" listStyleType="none" gap="5" {...props}>
+    <HStack gap="5" {...props}>
       {socials.map(({ href, label, icon, external, download }) => (
         <Link
+          // Plain anchors on purpose: these are external URLs or a static file
+          // download, not app routes — using next/link would make Next try to
+          // client-navigate/prefetch them (and 404 on the PDF).
           key={label}
-          as={NextLink}
-          href={href}
+          href={download ? asset(href) : href}
           aria-label={label}
           color="fg.muted"
           _hover={{ color: "fg" }}

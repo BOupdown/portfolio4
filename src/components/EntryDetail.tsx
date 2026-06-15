@@ -74,9 +74,14 @@ export function EntryDetail({ entry }: { entry: Entry }) {
               fontSize={{ base: "md", md: "lg" }}
               lineHeight="1.7"
             >
-              <Box as="span" color="accent.fg" mt="1.5" flexShrink={0}>
-                <Box w="6px" h="6px" borderRadius="full" bg="accent.solid" />
-              </Box>
+              <Box
+                flexShrink={0}
+                mt="2.5"
+                w="6px"
+                h="6px"
+                borderRadius="full"
+                bg="accent.solid"
+              />
               <Text as="span">{h}</Text>
             </List.Item>
           ))}
